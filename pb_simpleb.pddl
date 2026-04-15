@@ -1,9 +1,9 @@
 (define (problem pb_simpleb)
-  (:domain magabot_simple)
+  (:domain magabot_simple_order)
 
   (:objects
     r1 r2 - robot
-    pkg1 pkg2 pkg3 - package
+    pkg1 pkg2 pkg3 ground - package
     e1 e2 - shelf
     d - dispenser
 
@@ -54,13 +54,16 @@
     (wall l42) (wall l46)
     (wall l62) (wall l64) (wall l65)
 
-    ;; estantería E1: (2,2) l22, pkg2 abajo, pkg1 arriba
+    ;; estantería E1: (2,2) l22
+    ;; Paquete imaginario "ground" actúa como suelo
+    (on pkg2 ground)
     (on pkg1 pkg2)
     (on-shelf pkg2 e1)
     (on-shelf pkg1 e1)
     (top pkg1)
 
     ;; estantería E2: (2,5) l25
+    (on pkg3 ground)
     (on-shelf pkg3 e2)
     (top pkg3)
 
@@ -69,7 +72,7 @@
     (at e2 l25)
     (at d l44) ; (4,4)
 
-    ;; orden: pkg2 → pkg1 → pkg3
+    ;; orden de dispensación: pkg2 -> pkg1 -> pkg3
     (first pkg2)
     (next pkg2 pkg1)
     (next pkg1 pkg3)

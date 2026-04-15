@@ -17,7 +17,12 @@
   ;; mover
   (:action move
     :parameters (?r - robot ?from ?to - location)
-    :precondition (and (at ?r ?from) (adjacent ?from ?to) (not (wall ?to)))
+    :precondition (and 
+      (at ?r ?from) 
+      (adjacent ?from ?to) 
+      (not (wall ?to))
+      (not (exists (?r2 - robot) (and (not (= ?r ?r2)) (at ?r2 ?to))))
+    )
     :effect (and
       (not (at ?r ?from))
       (at ?r ?to)
